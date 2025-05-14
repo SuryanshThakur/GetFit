@@ -3,15 +3,15 @@
   <entity name="DietPlan" representedClassName="DietPlan" syncable="YES">
     <attribute name="name" optional="NO" attributeType="String"/>
     <attribute name="desc" optional="YES" attributeType="String"/>
-    <relationship name="meals" optional="YES" toMany="YES" destinationEntity="Meal" inverseName="dietPlan" inverseEntity="Meal"/>
+    <relationship name="meals" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Meal" inverseName="dietPlan" inverseEntity="Meal"/>
   </entity>
   <entity name="Meal" representedClassName="Meal" syncable="YES">
     <attribute name="name" optional="NO" attributeType="String"/>
     <attribute name="timeSlot" optional="YES" attributeType="String"/>
     <attribute name="startTime" optional="YES" attributeType="String"/>
     <attribute name="endTime" optional="YES" attributeType="String"/>
-    <relationship name="dietPlan" optional="NO" toMany="NO" destinationEntity="DietPlan" inverseName="meals" inverseEntity="DietPlan"/>
-    <relationship name="items" optional="YES" toMany="YES" destinationEntity="MealItem" inverseName="meal" inverseEntity="MealItem"/>
+    <relationship name="dietPlan" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="DietPlan" inverseName="meals" inverseEntity="DietPlan"/>
+    <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MealItem" inverseName="meal" inverseEntity="MealItem"/>
   </entity>
   <entity name="MealItem" representedClassName="MealItem" syncable="YES">
     <attribute name="id" optional="YES" attributeType="UUID"/>
@@ -22,6 +22,6 @@
     <attribute name="protein" optional="YES" attributeType="Integer 16"/>
     <attribute name="carbs" optional="YES" attributeType="Integer 16"/>
     <attribute name="fat" optional="YES" attributeType="Integer 16"/>
-    <relationship name="meal" optional="NO" toMany="NO" destinationEntity="Meal" inverseName="items" inverseEntity="Meal"/>
+    <relationship name="meal" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="Meal" inverseName="items" inverseEntity="Meal"/>
   </entity>
 </model>

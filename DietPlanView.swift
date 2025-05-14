@@ -137,11 +137,20 @@ struct DietPlanView: View {
         .onAppear {
             viewModel.resetMealsIfNeeded()
         }
+        // Use appropriate onChange based on iOS version
+        #if swift(>=5.9)
+        .onChange(of: scenePhase) {
+            if scenePhase == .active {
+                viewModel.resetMealsIfNeeded()
+            }
+        }
+        #else
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
                 viewModel.resetMealsIfNeeded()
             }
         }
+        #endif
     }
 }
 

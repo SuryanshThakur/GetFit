@@ -25,5 +25,7 @@
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
+	<key>NSMotionUsageDescription</key>
+	<string>GetFit needs access to motion data to track your steps and calculate calories burned.</string>
 </dict>
 </plist>

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB0F06242DD4EC69006E833C /* StepTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0F06232DD4EC69006E833C /* StepTrackingView.swift */; };
+		EB0F063F2DD4F459006E833C /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0F063E2DD4F459006E833C /* ViewModifiers.swift */; };
 		EB3F45EC2DD4753500BB3D79 /* GetFitModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EB3F45EA2DD4753500BB3D79 /* GetFitModel.xcdatamodeld */; };
 		EBE638DA2DD3E0F000418747 /* DietPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D32DD3E0F000418747 /* DietPlanView.swift */; };
 		EBE638DB2DD3E0F000418747 /* DietPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D42DD3E0F000418747 /* DietPlanViewModel.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB0F06232DD4EC69006E833C /* StepTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTrackingView.swift; sourceTree = "<group>"; };
+		EB0F063E2DD4F459006E833C /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		EB3F45EB2DD4753500BB3D79 /* GetFitModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GetFitModel.xcdatamodel; sourceTree = "<group>"; };
 		EBE6389C2DD3E0B700418747 /* GetFit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetFit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBE638B22DD3E0BA00418747 /* GetFitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GetFitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +124,8 @@
 		EBE638932DD3E0B700418747 = {
 			isa = PBXGroup;
 			children = (
+				EB0F063E2DD4F459006E833C /* ViewModifiers.swift */,
+				EB0F06232DD4EC69006E833C /* StepTrackingView.swift */,
 				EBEAE1CF2DD486A4001CEE6A /* GetFit.jpg */,
 				EBE639052DD3EDB300418747 /* GetFitApp.swift */,
 				EBE638EC2DD3EB3C00418747 /* SettingsView.swift */,
@@ -313,8 +319,10 @@
 				EBE638ED2DD3EB3C00418747 /* SettingsView.swift in Sources */,
 				EBE638DA2DD3E0F000418747 /* DietPlanView.swift in Sources */,
 				EBE638DB2DD3E0F000418747 /* DietPlanViewModel.swift in Sources */,
+				EB0F063F2DD4F459006E833C /* ViewModifiers.swift in Sources */,
 				EBE638DC2DD3E0F000418747 /* ProgressViewScreen.swift in Sources */,
 				EB3F45EC2DD4753500BB3D79 /* GetFitModel.xcdatamodeld in Sources */,
+				EB0F06242DD4EC69006E833C /* StepTrackingView.swift in Sources */,
 				EBE638DD2DD3E0F000418747 /* NotificationManager.swift in Sources */,
 				EBE638DE2DD3E0F000418747 /* CoreDataStack.swift in Sources */,
 				EBE638DF2DD3E0F000418747 /* Colors.swift in Sources */,
@@ -366,6 +374,7 @@
 				DEVELOPMENT_TEAM = PLVWMP3X43;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GetFit/Info.plist;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Allow health track from iPhone";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -393,6 +402,7 @@
 				DEVELOPMENT_TEAM = PLVWMP3X43;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GetFit/Info.plist;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Allow health track from iPhone";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

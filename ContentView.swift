@@ -15,6 +15,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("Workout", systemImage: "figure.walk")
                 }
+            NavigationView { StepTrackingView() }
+                .tabItem {
+                    Label("Activity", systemImage: "figure.walk.circle.fill")
+                }
             NavigationView { ProgressViewScreen() }
                 .tabItem {
                     Label("Progress", systemImage: "chart.bar")
