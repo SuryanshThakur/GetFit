@@ -6,6 +6,23 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EB3F45EC2DD4753500BB3D79 /* GetFitModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EB3F45EA2DD4753500BB3D79 /* GetFitModel.xcdatamodeld */; };
+		EBE638DA2DD3E0F000418747 /* DietPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D32DD3E0F000418747 /* DietPlanView.swift */; };
+		EBE638DB2DD3E0F000418747 /* DietPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D42DD3E0F000418747 /* DietPlanViewModel.swift */; };
+		EBE638DC2DD3E0F000418747 /* ProgressViewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D72DD3E0F000418747 /* ProgressViewScreen.swift */; };
+		EBE638DD2DD3E0F000418747 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D62DD3E0F000418747 /* NotificationManager.swift */; };
+		EBE638DE2DD3E0F000418747 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D22DD3E0F000418747 /* CoreDataStack.swift */; };
+		EBE638DF2DD3E0F000418747 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D02DD3E0F000418747 /* Colors.swift */; };
+		EBE638E12DD3E0F000418747 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D52DD3E0F000418747 /* HomeView.swift */; };
+		EBE638E22DD3E0F000418747 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D12DD3E0F000418747 /* ContentView.swift */; };
+		EBE638E32DD3E0F000418747 /* WorkoutPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638D92DD3E0F000418747 /* WorkoutPlanView.swift */; };
+		EBE638E52DD3E37D00418747 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638E42DD3E37D00418747 /* Models.swift */; };
+		EBE638ED2DD3EB3C00418747 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE638EC2DD3EB3C00418747 /* SettingsView.swift */; };
+		EBE639062DD3EDB300418747 /* GetFitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE639052DD3EDB300418747 /* GetFitApp.swift */; };
+		EBEAE1D12DD486A4001CEE6A /* GetFit.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBEAE1CF2DD486A4001CEE6A /* GetFit.jpg */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		EBE638B32DD3E0BA00418747 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,13 +41,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB3F45EB2DD4753500BB3D79 /* GetFitModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GetFitModel.xcdatamodel; sourceTree = "<group>"; };
 		EBE6389C2DD3E0B700418747 /* GetFit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetFit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBE638B22DD3E0BA00418747 /* GetFitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GetFitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBE638BC2DD3E0BA00418747 /* GetFitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GetFitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBE638D02DD3E0F000418747 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		EBE638D12DD3E0F000418747 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		EBE638D22DD3E0F000418747 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		EBE638D32DD3E0F000418747 /* DietPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietPlanView.swift; sourceTree = "<group>"; };
+		EBE638D42DD3E0F000418747 /* DietPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DietPlanViewModel.swift; sourceTree = "<group>"; };
+		EBE638D52DD3E0F000418747 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		EBE638D62DD3E0F000418747 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		EBE638D72DD3E0F000418747 /* ProgressViewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewScreen.swift; sourceTree = "<group>"; };
+		EBE638D92DD3E0F000418747 /* WorkoutPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPlanView.swift; sourceTree = "<group>"; };
+		EBE638E42DD3E37D00418747 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		EBE638E62DD3EB1400418747 /* GetFit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = GetFit.xcodeproj; sourceTree = "<group>"; };
+		EBE638EC2DD3EB3C00418747 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		EBE639052DD3EDB300418747 /* GetFitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFitApp.swift; sourceTree = "<group>"; };
+		EBEAE1CF2DD486A4001CEE6A /* GetFit.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = GetFit.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		EBE638C42DD3E0BA00418747 /* Exceptions for "GetFit" folder in "GetFit" target */ = {
+		EBE638FF2DD3EB8100418747 /* Exceptions for "GetFit" folder in "GetFit" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -43,7 +75,7 @@
 		EBE6389E2DD3E0B700418747 /* GetFit */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				EBE638C42DD3E0BA00418747 /* Exceptions for "GetFit" folder in "GetFit" target */,
+				EBE638FF2DD3EB8100418747 /* Exceptions for "GetFit" folder in "GetFit" target */,
 			);
 			path = GetFit;
 			sourceTree = "<group>";
@@ -88,6 +120,21 @@
 		EBE638932DD3E0B700418747 = {
 			isa = PBXGroup;
 			children = (
+				EBEAE1CF2DD486A4001CEE6A /* GetFit.jpg */,
+				EBE639052DD3EDB300418747 /* GetFitApp.swift */,
+				EBE638EC2DD3EB3C00418747 /* SettingsView.swift */,
+				EBE638E62DD3EB1400418747 /* GetFit.xcodeproj */,
+				EBE638E42DD3E37D00418747 /* Models.swift */,
+				EBE638D02DD3E0F000418747 /* Colors.swift */,
+				EBE638D12DD3E0F000418747 /* ContentView.swift */,
+				EBE638D22DD3E0F000418747 /* CoreDataStack.swift */,
+				EBE638D32DD3E0F000418747 /* DietPlanView.swift */,
+				EB3F45EA2DD4753500BB3D79 /* GetFitModel.xcdatamodeld */,
+				EBE638D42DD3E0F000418747 /* DietPlanViewModel.swift */,
+				EBE638D52DD3E0F000418747 /* HomeView.swift */,
+				EBE638D62DD3E0F000418747 /* NotificationManager.swift */,
+				EBE638D72DD3E0F000418747 /* ProgressViewScreen.swift */,
+				EBE638D92DD3E0F000418747 /* WorkoutPlanView.swift */,
 				EBE6389E2DD3E0B700418747 /* GetFit */,
 				EBE638B52DD3E0BA00418747 /* GetFitTests */,
 				EBE638BF2DD3E0BA00418747 /* GetFitUITests */,
@@ -102,6 +149,11 @@
 				EBE638B22DD3E0BA00418747 /* GetFitTests.xctest */,
 				EBE638BC2DD3E0BA00418747 /* GetFitUITests.xctest */,
 			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EBE638E82DD3EB1400418747 /* Products */ = {
+			isa = PBXGroup;
 			name = Products;
 			sourceTree = "<group>";
 		};
@@ -205,12 +257,20 @@
 			knownRegions = (
 				en,
 				Base,
+				"Base 2",
+				"base 2",
 			);
 			mainGroup = EBE638932DD3E0B700418747;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EBE6389D2DD3E0B700418747 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = EBE638E82DD3EB1400418747 /* Products */;
+					ProjectRef = EBE638E62DD3EB1400418747 /* GetFit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				EBE6389B2DD3E0B700418747 /* GetFit */,
@@ -225,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBEAE1D12DD486A4001CEE6A /* GetFit.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +310,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBE638ED2DD3EB3C00418747 /* SettingsView.swift in Sources */,
+				EBE638DA2DD3E0F000418747 /* DietPlanView.swift in Sources */,
+				EBE638DB2DD3E0F000418747 /* DietPlanViewModel.swift in Sources */,
+				EBE638DC2DD3E0F000418747 /* ProgressViewScreen.swift in Sources */,
+				EB3F45EC2DD4753500BB3D79 /* GetFitModel.xcdatamodeld in Sources */,
+				EBE638DD2DD3E0F000418747 /* NotificationManager.swift in Sources */,
+				EBE638DE2DD3E0F000418747 /* CoreDataStack.swift in Sources */,
+				EBE638DF2DD3E0F000418747 /* Colors.swift in Sources */,
+				EBE638E12DD3E0F000418747 /* HomeView.swift in Sources */,
+				EBE638E22DD3E0F000418747 /* ContentView.swift in Sources */,
+				EBE638E32DD3E0F000418747 /* WorkoutPlanView.swift in Sources */,
+				EBE639062DD3EDB300418747 /* GetFitApp.swift in Sources */,
+				EBE638E52DD3E37D00418747 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +368,6 @@
 				INFOPLIST_FILE = GetFit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -322,7 +395,6 @@
 				INFOPLIST_FILE = GetFit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -571,6 +643,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EB3F45EA2DD4753500BB3D79 /* GetFitModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EB3F45EB2DD4753500BB3D79 /* GetFitModel.xcdatamodel */,
+			);
+			currentVersion = EB3F45EB2DD4753500BB3D79 /* GetFitModel.xcdatamodel */;
+			path = GetFitModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = EBE638942DD3E0B700418747 /* Project object */;
 }
