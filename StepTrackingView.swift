@@ -37,14 +37,14 @@ class StepCountManager: ObservableObject {
     @Published var selectedDate: Date = Date()
     @Published var activityHistory: [DailyActivity] = []
     @Published var selectedActivity: DailyActivity?
-    @Published var currentWeekActivities: [DailyActivity] = [] // Current week activities
+    @Published var displayedActivities: [DailyActivity] = [] // Activities to display in the scrollable view
     
     private let pedometer = CMPedometer()
     private var updateTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
     
     init() {
-        // Generate sample historical activity data for the past week
+        // Generate sample historical activity data for the past 3 months
         generateHistoricalData()
         
         // Check if step counting is available on this device
@@ -79,8 +79,8 @@ class StepCountManager: ObservableObject {
             selectHistoricalData(for: selectedDate)
         }
         
-        // Initialize the current week's data
-        updateCurrentWeekActivities()
+        // Initialize the activities to display
+        updateDisplayedActivities()
     }
     
     deinit {
@@ -89,70 +89,94 @@ class StepCountManager: ObservableObject {
         cancellables.forEach { $0.cancel() }
     }
     
-    // Update the current week's activities
-    func updateCurrentWeekActivities() {
+    // Update activities to display in scrollable view
+    func updateDisplayedActivities() {
         let calendar = Calendar.current
         let today = Date()
         
-        // Find the start date of the current week (Monday)
-        var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)
-        let weekStart = calendar.date(from: components)!
+        // Generate activities for past 3 months
+        let endDate = today
+        guard let startDate = calendar.date(byAdding: .month, value: -3, to: today) else { return }
         
-        currentWeekActivities = []
+        displayedActivities = []
         
-        // Create array of 7 activities for Monday through Sunday
-        for dayOffset in 0..<7 {
-            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: weekStart) else { continue }
+        // Use an ordered set to avoid duplicates but preserve order
+        var processedDates = Set<String>()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        // Create array of activities from start date to today
+        var currentDate = startDate
+        while currentDate <= endDate {
+            let dateString = dateFormatter.string(from: currentDate)
+            
+            // Skip if we've already processed this date
+            if processedDates.contains(dateString) {
+                currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
+                continue
+            }
+            
+            processedDates.insert(dateString)
             
             // Check if we have existing data for this date
-            if let existingActivity = activityHistory.first(where: { calendar.isDate($0.date, inSameDayAs: date) }) {
-                currentWeekActivities.append(existingActivity)
+            if let existingActivity = activityHistory.first(where: { calendar.isDate($0.date, inSameDayAs: currentDate) }) {
+                displayedActivities.append(existingActivity)
             } else {
-                // Future date (no data yet)
-                let emptyActivity = DailyActivity(date: date, steps: 0, distance: 0, calories: 0)
-                currentWeekActivities.append(emptyActivity)
-                
-                // Add to history as well if it's not already there
-                if !activityHistory.contains(where: { calendar.isDate($0.date, inSameDayAs: date) }) {
-                    activityHistory.append(emptyActivity)
+                // Future date shows empty activity, past dates get random data
+                if currentDate > today {
+                    let emptyActivity = DailyActivity(date: currentDate, steps: 0, distance: 0, calories: 0)
+                    displayedActivities.append(emptyActivity)
+                    
+                    // Add to history as well if not already there
+                    if !activityHistory.contains(where: { calendar.isDate($0.date, inSameDayAs: currentDate) }) {
+                        activityHistory.append(emptyActivity)
+                    }
+                } else {
+                    let randomActivity = DailyActivity.randomActivity(for: currentDate)
+                    displayedActivities.append(randomActivity)
+                    
+                    // Add to history as well if not already there
+                    if !activityHistory.contains(where: { calendar.isDate($0.date, inSameDayAs: currentDate) }) {
+                        activityHistory.append(randomActivity)
+                    }
                 }
             }
+            
+            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
         }
+        
+        // Sort by date (newest first)
+        displayedActivities.sort { $0.date > $1.date }
     }
     
-    // Generate historical data for the past and current week
+    // Generate historical data for the past 3 months
     private func generateHistoricalData() {
         let calendar = Calendar.current
         let today = Date()
         
-        // Get the start of the current week (Monday)
-        var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)
-        let currentWeekStart = calendar.date(from: components)!
+        // Calculate 3 months ago
+        guard let threeMonthsAgo = calendar.date(byAdding: .month, value: -3, to: today) else { return }
         
-        // Generate data for the current week
-        for dayOffset in 0..<7 {
-            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: currentWeekStart) else { continue }
-            
+        // Generate data for each day in the 3-month period
+        var currentDate = threeMonthsAgo
+        
+        while currentDate <= today {
             // If this date is in the future, create an empty activity
-            if date > today {
-                let emptyActivity = DailyActivity(date: date, steps: 0, distance: 0, calories: 0)
+            if currentDate > today {
+                let emptyActivity = DailyActivity(date: currentDate, steps: 0, distance: 0, calories: 0)
                 activityHistory.append(emptyActivity)
             } 
             // Don't generate random data for today, we'll get real data if available
-            else if calendar.isDateInToday(date) && isStepCountingAvailable {
-                let placeholder = DailyActivity(date: date, steps: 0, distance: 0, calories: 0)
+            else if calendar.isDateInToday(currentDate) && isStepCountingAvailable {
+                let placeholder = DailyActivity(date: currentDate, steps: 0, distance: 0, calories: 0)
                 activityHistory.append(placeholder)
             } else {
-                activityHistory.append(DailyActivity.randomActivity(for: date))
+                activityHistory.append(DailyActivity.randomActivity(for: currentDate))
             }
-        }
-        
-        // Also generate data for the previous week
-        guard let previousWeekStart = calendar.date(byAdding: .weekOfYear, value: -1, to: currentWeekStart) else { return }
-        
-        for dayOffset in 0..<7 {
-            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: previousWeekStart) else { continue }
-            activityHistory.append(DailyActivity.randomActivity(for: date))
+            
+            // Move to next day
+            guard let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) else { break }
+            currentDate = nextDate
         }
         
         // Sort the history by date
@@ -324,13 +348,13 @@ struct WeekdayActivityRing: View {
         VStack(spacing: 4) {
             Text(dayLabel)
                 .font(.system(size: 12, weight: .medium))
-                .foregroundColor(isSelected ? .white : .primary)
+                .foregroundColor(isSelected ? .primary : .secondary)
             
             ActivityRing(
                 progress: activity.calorieProgress(target: targetCalories),
                 total: targetCalories,
                 current: Int(activity.calories),
-                color: .red,
+                color: isSelected ? .red : .red.opacity(0.7),
                 size: 40,
                 showValue: false,
                 lineWidth: 6,
@@ -338,8 +362,9 @@ struct WeekdayActivityRing: View {
                 selectedDay: isSelected
             )
         }
-        .padding(4)
-        .background(isSelected ? Circle().fill(Color.gray.opacity(0.3)) : nil)
+        .padding(6)
+        .background(isSelected ? Circle().fill(Color.gray.opacity(0.2)) : nil)
+        .contentShape(Circle())
     }
 }
 
@@ -350,6 +375,7 @@ struct StepTrackingView: View {
     @State private var showingPermissionAlert = false
     @State private var hourlyData: [Int] = Array(repeating: 0, count: 24) // For the hourly activity chart
     @State private var showingCalendarPicker = false
+    @State private var selectedDateForPicker = Date()
     
     // Calculate calories burned for the day based on step target
     private var targetCalories: Int {
@@ -391,72 +417,99 @@ struct StepTrackingView: View {
                             .multilineTextAlignment(.center)
                     }
                     
-                    // Header with date picker
+                    // Header with date picker - tightened spacing, no back button
                     HStack {
-                        Button(action: {
-                            // Go to previous day
-                            if let newDate = Calendar.current.date(byAdding: .day, value: -1, to: stepManager.selectedDate) {
-                                stepManager.selectedDate = newDate
-                            }
-                        }) {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.green)
-                                .imageScale(.large)
-                        }
-                        
-                        Spacer()
-                        
                         // Date with calendar picker button
                         Button(action: {
+                            selectedDateForPicker = stepManager.selectedDate
                             showingCalendarPicker.toggle()
                         }) {
-                            HStack {
+                            HStack(spacing: 4) {
                                 Text(formattedDate(from: stepManager.selectedDate))
-                                    .font(.title2.bold())
+                                    .font(.title3.bold())
                                 Image(systemName: "calendar")
-                                    .imageScale(.medium)
+                                    .imageScale(.small)
                             }
+                        }
+                        .sheet(isPresented: $showingCalendarPicker) {
+                            DatePicker("Select a date", selection: $selectedDateForPicker, 
+                                      displayedComponents: .date)
+                                .datePickerStyle(GraphicalDatePickerStyle())
+                                .labelsHidden()
+                                .presentationDetents([.height(400)])
+                                .padding()
+                                .onChange(of: selectedDateForPicker) { newDate in
+                                    stepManager.selectedDate = newDate
+                                }
+                                .toolbar {
+                                    ToolbarItem(placement: .confirmationAction) {
+                                        Button("Done") {
+                                            showingCalendarPicker = false
+                                        }
+                                    }
+                                }
                         }
                         
                         Spacer()
                         
-                        // Share button (for visual match with reference)
+                        // Share button with actual share functionality
                         Button(action: {
-                            // Share functionality would go here
+                            // Create items to share
+                            let currentDate = formattedDate(from: stepManager.selectedDate)
+                            let stepsText = "Steps: \(stepManager.steps)"
+                            let distanceText = "Distance: \(String(format: "%.2f", stepManager.distance)) km"
+                            let caloriesText = "Calories: \(Int(stepManager.calories))/\(targetCalories)"
+                            
+                            let activitySummary = "GetFit Activity Summary - \(currentDate)\n\(stepsText)\n\(distanceText)\n\(caloriesText)"
+                            
+                            // Create activity view controller
+                            let activityViewController = UIActivityViewController(
+                                activityItems: [activitySummary], 
+                                applicationActivities: nil
+                            )
+                            
+                            // Present the controller
+                            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                               let rootViewController = windowScene.windows.first?.rootViewController {
+                                rootViewController.present(activityViewController, animated: true)
+                            }
                         }) {
                             Image(systemName: "square.and.arrow.up")
                                 .foregroundColor(.green)
                                 .imageScale(.large)
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, 8)
                     
                     // Weekly activity rings
                     VStack(spacing: 12) {
-                        // Day indicators for week view
-                        HStack(spacing: 16) {
-                            ForEach(stepManager.currentWeekActivities.indices, id: \.self) { index in
-                                let activity = stepManager.currentWeekActivities[index]
-                                let calendar = Calendar.current
-                                let dayIndex = calendar.component(.weekday, from: activity.date) - 1
-                                let weekdaySymbol = calendar.veryShortWeekdaySymbols[dayIndex]
-                                let isSelected = calendar.isDate(activity.date, inSameDayAs: stepManager.selectedDate)
-                                let isToday = calendar.isDateInToday(activity.date)
-                                
-                                Button(action: {
-                                    stepManager.selectedDate = activity.date
-                                }) {
-                                    WeekdayActivityRing(
-                                        activity: activity,
-                                        targetCalories: targetCalories,
-                                        dayLabel: weekdaySymbol,
-                                        isSelected: isSelected,
-                                        isToday: isToday
-                                    )
+                        // Expanded day indicators with unlimited scrolling
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 12) {
+                                ForEach(stepManager.displayedActivities, id: \.id) { activity in
+                                    let calendar = Calendar.current
+                                    let dayIndex = calendar.component(.weekday, from: activity.date) - 1
+                                    let weekdaySymbol = calendar.veryShortWeekdaySymbols[dayIndex]
+                                    let isSelected = calendar.isDate(activity.date, inSameDayAs: stepManager.selectedDate)
+                                    let isToday = calendar.isDateInToday(activity.date)
+                                    
+                                    Button(action: {
+                                        withAnimation {
+                                            stepManager.selectedDate = activity.date
+                                        }
+                                    }) {
+                                        WeekdayActivityRing(
+                                            activity: activity,
+                                            targetCalories: targetCalories,
+                                            dayLabel: weekdaySymbol,
+                                            isSelected: isSelected,
+                                            isToday: isToday
+                                        )
+                                    }
                                 }
                             }
+                            .padding(.horizontal, 8)
                         }
-                        .padding(.horizontal)
                         
                         // Main Activity Ring
                         ActivityRing(
@@ -557,51 +610,8 @@ struct StepTrackingView: View {
                         }
                         .padding(.horizontal)
                         
-                        // Bottom tab bar placeholder
-                        HStack(spacing: 0) {
-                            Spacer()
-                            Button(action: {}) {
-                                VStack {
-                                    Image(systemName: "house")
-                                        .imageScale(.large)
-                                    Text("Home")
-                                        .font(.caption)
-                                }
-                                .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            Button(action: {}) {
-                                VStack {
-                                    Image(systemName: "fork.knife")
-                                        .imageScale(.large)
-                                    Text("Diet")
-                                        .font(.caption)
-                                }
-                                .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            Button(action: {}) {
-                                VStack {
-                                    Image(systemName: "figure.walk.circle.fill")
-                                        .imageScale(.large)
-                                    Text("Activity")
-                                        .font(.caption)
-                                }
-                                .foregroundColor(.orange)
-                            }
-                            Spacer()
-                            Button(action: {}) {
-                                VStack {
-                                    Image(systemName: "gear")
-                                        .imageScale(.large)
-                                    Text("More")
-                                        .font(.caption)
-                                }
-                                .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                        }
-                        .padding(.top, 20)
+                        // Intentionally removed duplicate bottom tab bar
+                        // The tab bar is already handled by the TabView in the main content view
                     }
                 }
                 .padding()
@@ -628,8 +638,8 @@ struct StepTrackingView: View {
                 // Update the appearance based on dark mode setting
                 updateAppearance()
                 
-                // Update the current week activities
-                stepManager.updateCurrentWeekActivities()
+                // Update the activities to display
+                stepManager.updateDisplayedActivities()
             }
             .onChange(of: isDarkMode) { _ in
                 updateAppearance()

@@ -226,9 +226,15 @@ struct SettingsView: View {
                 settingsObserver.startObserving(notificationManager: notificationManager)
             }
             // Just handle dark mode changes directly
+            #if swift(>=5.9)
+            .onChange(of: isDarkMode) { 
+                updateAppearance()
+            }
+            #else
             .onChange(of: isDarkMode) { newValue in
                 updateAppearance()
             }
+            #endif
         }
     }
     
